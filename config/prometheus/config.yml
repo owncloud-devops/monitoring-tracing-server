@@ -1,0 +1,12 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 30s
+  # scrape_timeout is set to the global default (10s).
+
+  external_labels:
+    monitor: codelab
+
+scrape_configs:
+  - job_name: 'telegraf_testing'
+    static_configs:
+    - targets: ['172.19.0.1:9273']
