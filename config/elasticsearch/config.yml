@@ -1,7 +1,3 @@
-################################### Production Configuration ###################################
-### Author: Greg Dooper
-### Description: Parameters recommended from documentation
-
 network :
     host : 0.0.0.0
 

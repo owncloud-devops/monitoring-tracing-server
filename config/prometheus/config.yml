@@ -3,6 +3,11 @@ global:
   evaluation_interval: 30s
 
 scrape_configs:
+  - job_name: "self_monitoring"
+    static_configs:
+      - targets: [
+        "telegraf:9273",
+        ]
   - job_name: "test_server"
     static_configs:
       - targets: [
