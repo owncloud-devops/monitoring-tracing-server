@@ -113,7 +113,7 @@
       "pluginVersion": "7.3.4",
       "targets": [
         {
-          "expr": "up{instance=\"$instance\"}",
+          "expr": "up{host=\"$host\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -187,10 +187,10 @@
         "lineColor": "rgb(31, 120, 193)",
         "show": false
       },
-      "tableColumn": "system_n_cpus{host=\"s-kv-center-i28\", instance=\"s-kv-center-i28.officekiev.fozzy.lan:9273\", job=\"telegraf_exporter\"}",
+      "tableColumn": "system_n_cpus{host=\"s-kv-center-i28\", host=\"s-kv-center-i28.officekiev.fozzy.lan:9273\", job=\"telegraf_exporter\"}",
       "targets": [
         {
-          "expr": "system_n_cpus{instance=\"$instance\"}",
+          "expr": "system_n_cpus{host=\"$host\"}",
           "format": "time_series",
           "instant": false,
           "interval": "",
@@ -277,10 +277,10 @@
         "lineColor": "rgb(31, 120, 193)",
         "show": false
       },
-      "tableColumn": "system_n_users{host=\"s-kv-center-i28\", instance=\"s-kv-center-i28.officekiev.fozzy.lan:9273\", job=\"telegraf_exporter\"}",
+      "tableColumn": "system_n_users{host=\"s-kv-center-i28\", host=\"s-kv-center-i28.officekiev.fozzy.lan:9273\", job=\"telegraf_exporter\"}",
       "targets": [
         {
-          "expr": "system_n_users{instance=\"$instance\"}",
+          "expr": "system_n_users{host=\"$host\"}",
           "format": "time_series",
           "instant": false,
           "interval": "",
@@ -350,14 +350,14 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "rate(net_bytes_recv{instance=\"$instance\",interface!~\"lo\"}[1m])",
+          "expr": "rate(net_bytes_recv{host=\"$host\",interface!~\"lo\"}[1m])",
           "instant": false,
           "interval": "",
           "legendFormat": "received by the {{interface}}",
           "refId": "A"
         },
         {
-          "expr": "rate(net_bytes_sent{instance=\"$instance\",interface!~\"lo\"}[1m])",
+          "expr": "rate(net_bytes_sent{host=\"$host\",interface!~\"lo\"}[1m])",
           "interval": "",
           "legendFormat": "sent by the {{interface}}",
           "refId": "B"
@@ -469,10 +469,10 @@
         "lineColor": "rgb(31, 120, 193)",
         "show": false
       },
-      "tableColumn": "system_uptime{host=\"s-kv-center-i28\", instance=\"s-kv-center-i28.officekiev.fozzy.lan:9273\", job=\"telegraf_exporter\"}",
+      "tableColumn": "system_uptime{host=\"s-kv-center-i28\", host=\"s-kv-center-i28.officekiev.fozzy.lan:9273\", job=\"telegraf_exporter\"}",
       "targets": [
         {
-          "expr": "system_uptime{instance=\"$instance\"}",
+          "expr": "system_uptime{host=\"$host\"}",
           "format": "time_series",
           "instant": false,
           "interval": "",
@@ -559,10 +559,10 @@
         "lineColor": "rgb(31, 120, 193)",
         "show": false
       },
-      "tableColumn": "mem_total{host=\"s-kv-center-i28\", instance=\"s-kv-center-i28.officekiev.fozzy.lan:9273\", job=\"telegraf_exporter\"}",
+      "tableColumn": "mem_total{host=\"s-kv-center-i28\", host=\"s-kv-center-i28.officekiev.fozzy.lan:9273\", job=\"telegraf_exporter\"}",
       "targets": [
         {
-          "expr": "mem_total{instance=\"$instance\"}",
+          "expr": "mem_total{host=\"$host\"}",
           "format": "time_series",
           "instant": false,
           "interval": "",
@@ -649,10 +649,10 @@
         "lineColor": "rgb(31, 120, 193)",
         "show": false
       },
-      "tableColumn": "processes_total{host=\"s-kv-center-i28\", instance=\"s-kv-center-i28.officekiev.fozzy.lan:9273\", job=\"telegraf_exporter\"}",
+      "tableColumn": "processes_total{host=\"s-kv-center-i28\", host=\"s-kv-center-i28.officekiev.fozzy.lan:9273\", job=\"telegraf_exporter\"}",
       "targets": [
         {
-          "expr": "processes_total{instance=\"$instance\"}",
+          "expr": "processes_total{host=\"$host\"}",
           "format": "time_series",
           "instant": false,
           "interval": "",
@@ -752,7 +752,7 @@
           "tableColumn": "",
           "targets": [
             {
-              "expr": "sum(100-cpu_usage_idle{instance=\"$instance\", cpu=\"cpu-total\"})",
+              "expr": "sum(100-cpu_usage_idle{host=\"$host\", cpu=\"cpu-total\"})",
               "format": "time_series",
               "instant": true,
               "intervalFactor": 1,
@@ -818,21 +818,21 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "cpu_usage_user{instance=\"$instance\", cpu=\"cpu-total\"}",
+              "expr": "cpu_usage_user{host=\"$host\", cpu=\"cpu-total\"}",
               "format": "time_series",
               "intervalFactor": 1,
               "legendFormat": "User",
               "refId": "B"
             },
             {
-              "expr": "cpu_usage_system{instance=\"$instance\", cpu=\"cpu-total\"}",
+              "expr": "cpu_usage_system{host=\"$host\", cpu=\"cpu-total\"}",
               "format": "time_series",
               "intervalFactor": 1,
               "legendFormat": "System",
               "refId": "A"
             },
             {
-              "expr": "cpu_usage_idle{instance=\"$instance\", cpu=\"cpu-total\"}",
+              "expr": "cpu_usage_idle{host=\"$host\", cpu=\"cpu-total\"}",
               "format": "time_series",
               "hide": false,
               "intervalFactor": 1,
@@ -929,21 +929,21 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "system_load1{instance=\"$instance\"}",
+              "expr": "system_load1{host=\"$host\"}",
               "format": "time_series",
               "intervalFactor": 1,
               "legendFormat": "Load 1m",
               "refId": "A"
             },
             {
-              "expr": "system_load5{instance=\"$instance\"}",
+              "expr": "system_load5{host=\"$host\"}",
               "format": "time_series",
               "intervalFactor": 1,
               "legendFormat": "Load 5m",
               "refId": "B"
             },
             {
-              "expr": "system_load15{instance=\"$instance\"}",
+              "expr": "system_load15{host=\"$host\"}",
               "format": "time_series",
               "intervalFactor": 1,
               "legendFormat": "Load 15m",
@@ -1040,63 +1040,63 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "processes_blocked{instance=\"$instance\"}",
+              "expr": "processes_blocked{host=\"$host\"}",
               "format": "time_series",
               "intervalFactor": 1,
               "legendFormat": "Blocked",
               "refId": "A"
             },
             {
-              "expr": "processes_dead{instance=\"$instance\"}",
+              "expr": "processes_dead{host=\"$host\"}",
               "format": "time_series",
               "intervalFactor": 1,
               "legendFormat": "Dead",
               "refId": "B"
             },
             {
-              "expr": "processes_idle{instance=\"$instance\"}",
+              "expr": "processes_idle{host=\"$host\"}",
               "format": "time_series",
               "intervalFactor": 1,
               "legendFormat": "Idle",
               "refId": "C"
             },
             {
-              "expr": "processes_paging{instance=\"$instance\"}",
+              "expr": "processes_paging{host=\"$host\"}",
               "format": "time_series",
               "intervalFactor": 1,
               "legendFormat": "Paging",
               "refId": "D"
             },
             {
-              "expr": "processes_running{instance=\"$instance\"}",
+              "expr": "processes_running{host=\"$host\"}",
               "format": "time_series",
               "intervalFactor": 1,
               "legendFormat": "Running",
               "refId": "E"
             },
             {
-              "expr": "processes_sleeping{instance=\"$instance\"}",
+              "expr": "processes_sleeping{host=\"$host\"}",
               "format": "time_series",
               "intervalFactor": 1,
               "legendFormat": "Sleeping",
               "refId": "F"
             },
             {
-              "expr": "processes_stopped{instance=\"$instance\"}",
+              "expr": "processes_stopped{host=\"$host\"}",
               "format": "time_series",
               "intervalFactor": 1,
               "legendFormat": "Stopped",
               "refId": "G"
             },
             {
-              "expr": "processes_unknown{instance=\"$instance\"}",
+              "expr": "processes_unknown{host=\"$host\"}",
               "format": "time_series",
               "intervalFactor": 1,
               "legendFormat": "Unknown",
               "refId": "H"
             },
             {
-              "expr": "processes_zombies{instance=\"$instance\"}",
+              "expr": "processes_zombies{host=\"$host\"}",
               "format": "time_series",
               "intervalFactor": 1,
               "legendFormat": "Zombies",
@@ -1223,10 +1223,10 @@
             "lineColor": "rgb(31, 120, 193)",
             "show": false
           },
-          "tableColumn": "mem_used_percent{host=\"s-kv-center-i28\", instance=\"s-kv-center-i28.officekiev.fozzy.lan:9273\", job=\"telegraf_exporter\"}",
+          "tableColumn": "mem_used_percent{host=\"s-kv-center-i28\", host=\"s-kv-center-i28.officekiev.fozzy.lan:9273\", job=\"telegraf_exporter\"}",
           "targets": [
             {
-              "expr": "mem_used_percent{instance=\"$instance\"}",
+              "expr": "mem_used_percent{host=\"$host\"}",
               "format": "time_series",
               "instant": true,
               "intervalFactor": 1,
@@ -1310,27 +1310,27 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "mem_used{instance=~\"$instance*\"}",
+              "expr": "mem_used{host=~\"$host*\"}",
               "legendFormat": "mem_used",
               "refId": "A"
             },
             {
-              "expr": "mem_buffered{instance=~\"$instance\"}",
+              "expr": "mem_buffered{host=~\"$host\"}",
               "legendFormat": "mem_buffered",
               "refId": "B"
             },
             {
-              "expr": "mem_cached{instance=~\"$instance\"}",
+              "expr": "mem_cached{host=~\"$host\"}",
               "legendFormat": "mem_cached",
               "refId": "C"
             },
             {
-              "expr": "swap_used{instance=~\"$instance\"}",
+              "expr": "swap_used{host=~\"$host\"}",
               "legendFormat": "mem_swap",
               "refId": "D"
             },
             {
-              "expr": "mem_free{instance=\"$instance\"}",
+              "expr": "mem_free{host=\"$host\"}",
               "interval": "",
               "legendFormat": "mem_free",
               "refId": "E"
@@ -1440,7 +1440,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "disk_used_percent{instance=~\"$instance\"}",
+              "expr": "disk_used_percent{host=~\"$host\"}",
               "interval": "",
               "legendFormat": "{{path}}",
               "refId": "A"
@@ -1533,7 +1533,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "rate(diskio_read_bytes{instance=~\"$instance\",name!~\"dm-[0-9]\"}[5m])",
+              "expr": "rate(diskio_read_bytes{host=~\"$host\",name!~\"dm-[0-9]\"}[5m])",
               "instant": false,
               "interval": "",
               "legendFormat": "{{name}}",
@@ -1627,7 +1627,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "rate(diskio_write_bytes{instance=~\"$instance\",name!~\"dm-[0-9]\"}[5m])",
+              "expr": "rate(diskio_write_bytes{host=~\"$host\",name!~\"dm-[0-9]\"}[5m])",
               "instant": false,
               "interval": "",
               "legendFormat": "{{name}}",
@@ -1704,9 +1704,9 @@
         "includeAll": false,
         "label": null,
         "multi": false,
-        "name": "instance",
+        "name": "host",
         "options": [],
-        "query": "label_values(system_uptime, instance)",
+        "query": "label_values(system_uptime, host)",
         "refresh": 1,
         "regex": "/(.*)/",
         "skipUrlSync": false,
@@ -1733,7 +1733,7 @@
         "multi": true,
         "name": "disk_device",
         "options": [],
-        "query": "label_values(disk_used_percent{fstype!=\"rootfs\", instance=\"$instance\"}, device)",
+        "query": "label_values(disk_used_percent{fstype!=\"rootfs\", host=\"$host\"}, device)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -1765,7 +1765,7 @@
         "multi": true,
         "name": "interface",
         "options": [],
-        "query": "label_values(net_bytes_sent{instance=\"$instance\"}, interface)",
+        "query": "label_values(net_bytes_sent{host=\"$host\"}, interface)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
