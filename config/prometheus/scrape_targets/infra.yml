@@ -1,4 +1,4 @@
 - labels:
-    - service: infra
+    service: infra
   targets:
     - "telemetry.owncloud.works"
