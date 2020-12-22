@@ -1,0 +1,7 @@
+apiVersion: 1
+
+datasources:
+  - name: jaeger
+    type: jaeger
+    access: proxy
+    url: http://jaeger-query:16686

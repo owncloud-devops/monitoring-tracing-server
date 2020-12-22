@@ -1,0 +1,209 @@
+---
+version: "3.7"
+
+services:
+  traefik:
+    image: "traefik:v2.3"
+    command:
+      - "--certificatesResolvers.http.acme.email=${TRAEFIK_ACME_MAIL:-'example@example.org'}"
+      - "--certificatesResolvers.http.acme.storage=/certs/acme.json"
+      - "--certificatesResolvers.http.acme.httpChallenge.entryPoint=http"
+      - "--api.dashboard=true"
+      - "--entryPoints.http.address=:80"
+      - "--entryPoints.https.address=:443"
+      - "--providers.docker.endpoint=unix:///var/run/docker.sock"
+      - "--providers.docker.exposedByDefault=false"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "certs:/certs"
+    labels:
+      - "traefik.enable=${TRAEFIK_DASHBOARD:-false}"
+      - "traefik.http.routers.traefik.entrypoints=http"
+      - "traefik.http.routers.traefik.rule=Host(`${TRAEFIK_DOMAIN:-traefik.owncloud.test}`)"
+      - "traefik.http.middlewares.traefik-https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.traefik.middlewares=traefik-https-redirect"
+      - "traefik.http.routers.traefik-secure.entrypoints=https"
+      - "traefik.http.routers.traefik-secure.rule=Host(`${TRAEFIK_DOMAIN:-traefik.owncloud.test}`)"
+      - "traefik.http.middlewares.traefik-auth.basicauth.users=${TRAEFIK_BASIC_AUTH_USERS:-admin:$apr1$4vqie50r$YQAmQdtmz5n9rEALhxJ4l.}" # defaults to admin:admin
+      - "traefik.http.routers.traefik-secure.middlewares=traefik-auth"      
+      - "traefik.http.routers.traefik-secure.tls=true"
+      - "traefik.http.routers.traefik-secure.tls.certresolver=http"
+      - "traefik.http.routers.traefik-secure.service=api@internal"
+    logging: &logging
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "2"
+    restart: always
+
+  grafana:
+    image: grafana/grafana:7.3.4
+    volumes:
+      - grafana:/var/lib/grafana
+      - ./config/grafana/dashboards/:/etc/grafana/dashboards/
+      - ./config/grafana/provisioning/:/etc/grafana/provisioning/
+    environment:
+      - GF_SERVER_DOMAIN=${GRAFANA_DOMAIN:-grafana.owncloud.test}
+      - GF_SERVER_ROOT_URL=https://${GRAFANA_DOMAIN:-grafana.owncloud.test}
+      - GF_AUTH_BASIC_ENABLED=false
+      - GF_SECURITY_ADMIN_USER=${GRAFANA_USER:-admin}
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD:-admin}
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_INSTALL_PLUGINS=grafana-piechart-panel,grafana-github-datasource,grafana-clock-panel
+      - GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH=/etc/grafana/dashboards/home.json
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.grafana.entrypoints=http"
+      - "traefik.http.routers.grafana.rule=Host(`${GRAFANA_DOMAIN:-grafana.owncloud.test}`)"
+      - "traefik.http.middlewares.grafana-https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.grafana.middlewares=grafana-https-redirect"
+      - "traefik.http.routers.grafana-secure.entrypoints=https"
+      - "traefik.http.routers.grafana-secure.rule=Host(`${GRAFANA_DOMAIN:-grafana.owncloud.test}`)"
+      - "traefik.http.routers.grafana-secure.tls=true"
+      - "traefik.http.routers.grafana-secure.tls.certresolver=http"
+      - "traefik.http.routers.grafana-secure.service=grafana"
+      - "traefik.http.services.grafana.loadbalancer.server.port=3000"
+    logging:
+      <<: *logging
+    restart: always
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.9.3
+    environment:
+      - bootstrap.memory_lock=true
+      - ES_JAVA_OPTS=-Xms2G -Xmx2G
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    mem_limit: 4g
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
+      - ./config/elasticsearch/config.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+    logging:
+      <<: *logging
+    restart: always
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.9.3
+    environment:
+      ELASTICSEARCH_URL: http://elasticsearch:9200
+    ports:
+      - "127.0.0.1:5601:5601"
+    labels:
+      - "traefik.enable=false" # TODO: add basic auth when enabling
+      - "traefik.http.routers.kibana.entrypoints=http"
+      - "traefik.http.routers.kibana.rule=Host(`${KIBANA_DOMAIN:-kibana.owncloud.test}`)"
+      - "traefik.http.middlewares.kibana-https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.kibana.middlewares=kibana-https-redirect"
+      - "traefik.http.routers.kibana-secure.entrypoints=https"
+      - "traefik.http.routers.kibana-secure.rule=Host(`${KIBANA_DOMAIN:-kibana.owncloud.test}`)"
+      - "traefik.http.routers.kibana-secure.tls=true"
+      - "traefik.http.routers.kibana-secure.tls.certresolver=http"
+      - "traefik.http.routers.kibana-secure.service=kibana"
+      - "traefik.http.services.kibana.loadbalancer.server.port=5601"
+    logging:
+      <<: *logging
+    restart: always
+
+  jaeger-collector:
+    image: jaegertracing/jaeger-collector:1.21.0
+    command: |
+      --span-storage.type=elasticsearch
+      --es.server-urls=http://elasticsearch:9200
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.jaeger-collector.entrypoints=http"
+      - "traefik.http.routers.jaeger-collector.rule=Host(`${JAEGER_COLLECTOR_DOMAIN:-jaeger-collector.owncloud.test}`)"
+      - "traefik.http.middlewares.jaeger-collector-https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.jaeger-collector.middlewares=jaeger-collector-https-redirect"
+      - "traefik.http.routers.jaeger-collector-secure.entrypoints=https"
+      - "traefik.http.routers.jaeger-collector-secure.rule=Host(`${JAEGER_COLLECTOR_DOMAIN:-jaeger-collector.owncloud.test}`)"
+      - "traefik.http.routers.jaeger-collector-secure.tls=true"
+      - "traefik.http.routers.jaeger-collector-secure.tls.certresolver=http"
+      - "traefik.http.routers.jaeger-collector-secure.service=jaeger-collector"
+      - "traefik.http.services.jaeger-collector.loadbalancer.server.scheme=h2c"
+      - "traefik.http.services.jaeger-collector.loadbalancer.server.port=14250"
+    logging:
+      <<: *logging
+    restart: always
+
+  jaeger-query:
+    image: jaegertracing/jaeger-query:1.21.0
+    command: |
+      --span-storage.type=elasticsearch
+      --es.server-urls=http://elasticsearch:9200
+      --es.sniffer=false
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.jaeger-query.entrypoints=http"
+      - "traefik.http.routers.jaeger-query.rule=Host(`${JAEGER_QUERY_DOMAIN:-jaeger.owncloud.test}`)"
+      - "traefik.http.middlewares.jaeger-query-https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.jaeger-query.middlewares=jaeger-query-https-redirect"
+      - "traefik.http.routers.jaeger-query-secure.entrypoints=https"
+      - "traefik.http.routers.jaeger-query-secure.rule=Host(`${JAEGER_QUERY_DOMAIN:-jaeger.owncloud.test}`)"
+      #- "traefik.http.middlewares.jaeger-query-auth.basicauth.users=${JAEGER_QUERY_BASIC_AUTH_USERS:-admin:$apr1$4vqie50r$YQAmQdtmz5n9rEALhxJ4l.}" # defaults to admin:admin
+      #- "traefik.http.routers.jaeger-query-secure.middlewares=jaeger-query-auth"
+      - "traefik.http.routers.jaeger-query-secure.tls=true"
+      - "traefik.http.routers.jaeger-query-secure.tls.certresolver=http"
+      - "traefik.http.routers.jaeger-query-secure.service=jaeger-query"
+      - "traefik.http.services.jaeger-query.loadbalancer.server.port=16686"
+    logging:
+      <<: *logging
+    restart: always
+
+  prometheus:
+    image: prom/prometheus:v2.23.0
+    command:
+      - "--web.external-url=https://${PROMETHEUS_DOMAIN:-prometheus.owncloud.test}"
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+    volumes:
+      - ./config/prometheus/scrape_targets:/etc/prometheus/scrape_targets:ro
+      - ./config/prometheus/config.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.prometheus.entrypoints=http"
+      - "traefik.http.routers.prometheus.rule=Host(`${PROMETHEUS_DOMAIN:-prometheus.owncloud.test}`)"
+      - "traefik.http.middlewares.prometheus-https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.prometheus.middlewares=prometheus-https-redirect"
+      - "traefik.http.routers.prometheus-secure.entrypoints=https"
+      - "traefik.http.routers.prometheus-secure.rule=Host(`${PROMETHEUS_DOMAIN:-prometheus.owncloud.test}`)"
+      #- "traefik.http.middlewares.prometheus-auth.basicauth.users=${PROMETHEUS_BASIC_AUTH_USERS:-admin:$apr1$4vqie50r$YQAmQdtmz5n9rEALhxJ4l.}" # defaults to admin:admin
+      #- "traefik.http.routers.prometheus-secure.middlewares=prometheus-auth"
+      - "traefik.http.routers.prometheus-secure.tls=true"
+      - "traefik.http.routers.prometheus-secure.tls.certresolver=http"
+      - "traefik.http.routers.prometheus-secure.service=prometheus"
+      - "traefik.http.services.prometheus.loadbalancer.server.port=9090"
+    logging:
+      <<: *logging
+    restart: always
+
+  telegraf:
+    image: telegraf:latest
+    command: ["--config-directory","/etc/telegraf/telegraf.d/"]
+    volumes:
+      - ./config/telegraf:/etc/telegraf/telegraf.d:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /:/hostfs:ro
+    environment:
+      HOSTNAME: ${TELEMETRY_SERVE_DOMAIN:-telemetry.infra.owncloud.test}
+      HOST_ETC: /hostfs/etc
+      HOST_PROC: /hostfs/proc
+      HOST_SYS: /hostfs/sys
+      HOST_VAR: /hostfs/var
+      HOST_RUN: /hostfs/run
+      HOST_MOUNT_PREFIX: /hostfs
+    logging:
+      <<: *logging
+    restart: always
+
+volumes:
+  certs:
+  elasticsearch-data:
+  prometheus-data:
+  grafana:

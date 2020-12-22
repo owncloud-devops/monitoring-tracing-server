@@ -1,0 +1,4 @@
+- labels:
+    service: oCIS
+  targets:
+    #- "telemetry.owncloud.works"
