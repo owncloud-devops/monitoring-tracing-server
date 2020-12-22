@@ -8,9 +8,8 @@ scrape_configs:
       - targets: [
         "telegraf:9273",
         ]
-  - job_name: "test_server"
-    static_configs:
-      - targets: [
-        "telemetry.owncloud.test",
-        "172.17.0.1:9273"
-        ]
+
+  - job_name: 'oCIS'
+    file_sd_configs:
+      - files:
+        - /etc/prometheus/scrape_targets/ocis.yml

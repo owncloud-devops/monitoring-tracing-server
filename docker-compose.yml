@@ -5,7 +5,6 @@ services:
   traefik:
     image: "traefik:v2.3"
     command:
-      #- "--log.level=DEBUG"
       - "--certificatesResolvers.http.acme.email=${TRAEFIK_ACME_MAIL:-'example@example.org'}"
       - "--certificatesResolvers.http.acme.storage=/certs/acme.json"
       - "--certificatesResolvers.http.acme.httpChallenge.entryPoint=http"
@@ -163,6 +162,7 @@ services:
       - "--config.file=/etc/prometheus/prometheus.yml"
       - "--storage.tsdb.path=/prometheus"
     volumes:
+      - ./config/prometheus/scrape_targets:/etc/prometheus/scrape_targets:ro
       - ./config/prometheus/config.yml:/etc/prometheus/prometheus.yml:ro
       - prometheus-data:/prometheus
     labels:
