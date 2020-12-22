@@ -185,8 +185,9 @@ services:
 
   telegraf:
     image: telegraf:latest
+    command: ["--config-directory","/etc/telegraf/telegraf.d/"]
     volumes:
-      - ./config/telegraf/telegraf.toml:/etc/telegraf/telegraf.conf:ro
+      - ./config/telegraf:/etc/telegraf/telegraf.d:ro
       - /var/run/docker.sock:/var/run/docker.sock
       - /:/hostfs:ro
     environment:
