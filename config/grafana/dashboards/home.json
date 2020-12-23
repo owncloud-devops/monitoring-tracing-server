@@ -32,7 +32,7 @@
         "x": 5,
         "y": 0
       },
-      "headings": true,
+      "headings": false,
       "id": 2,
       "limit": 10,
       "pluginVersion": "7.3.4",
@@ -72,5 +72,5 @@
   "timezone": "",
   "title": "Home",
   "uid": "8gxza41Gk",
-  "version": 1
+  "version": 2
 }
