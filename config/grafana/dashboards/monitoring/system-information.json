@@ -16,7 +16,8 @@
   "editable": true,
   "gnetId": 12484,
   "graphTooltip": 0,
-  "iteration": 1608288007434,
+  "id": 2,
+  "iteration": 1608718475264,
   "links": [],
   "panels": [
     {
@@ -434,7 +435,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:299",
           "format": "percent",
           "label": null,
           "logBase": 1,
@@ -443,7 +443,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:300",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -628,7 +627,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:193",
           "format": "bytes",
           "label": null,
           "logBase": 1,
@@ -637,7 +635,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:194",
           "format": "bytes",
           "label": null,
           "logBase": 1,
@@ -728,7 +725,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:140",
           "format": "percent",
           "label": null,
           "logBase": 1,
@@ -737,7 +733,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:141",
           "format": "percent",
           "label": null,
           "logBase": 1,
@@ -945,7 +940,9 @@
   "refresh": "30s",
   "schemaVersion": 26,
   "style": "dark",
-  "tags": [],
+  "tags": [
+    "monitoring"
+  ],
   "templating": {
     "list": [
       {
@@ -971,8 +968,8 @@
         "allValue": null,
         "current": {
           "selected": false,
-          "text": "foobar",
-          "value": "foobar"
+          "text": "telemetry.infra.owncloud.works",
+          "value": "telemetry.infra.owncloud.works"
         },
         "datasource": "$datasource",
         "definition": "label_values(system_uptime, host)",

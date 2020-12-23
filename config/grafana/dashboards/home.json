@@ -15,6 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
+  "id": 4,
   "links": [],
   "panels": [
     {
@@ -25,7 +26,6 @@
         },
         "overrides": []
       },
-      "folderId": 2,
       "gridPos": {
         "h": 11,
         "w": 14,
@@ -40,7 +40,9 @@
       "recent": false,
       "search": true,
       "starred": false,
-      "tags": [],
+      "tags": [
+        "monitoring"
+      ],
       "targets": [
         {
           "queryType": "randomWalk",
@@ -70,5 +72,5 @@
   "timezone": "",
   "title": "Home",
   "uid": "8gxza41Gk",
-  "version": 3
+  "version": 1
 }
