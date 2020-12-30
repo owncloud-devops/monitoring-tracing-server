@@ -37,3 +37,10 @@ For that you will need an account on the Grafana instance. Then you can log in a
 Add your host name to `config/prometheus/scrape_targets/ocis.yml` in a PR.
 
 ## Deployment
+
+1. prepare a linux server with docker and docker-compose installed
+1. point a wildcard dns entry to the ip of the server (multiple A-records also will work)
+1. clone this repository
+1. create `.env` file by running `cp .env.dist .env` inside the root of this repository
+1. configure as needed inside the `.env` file
+1. run `docker-compose up -d`
