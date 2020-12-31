@@ -187,7 +187,7 @@ services:
 
   telegraf:
     image: telegraf:latest
-    command: |
+    command: | # only use config directory, but therefore we need to give a empty config file
       --config-directory /etc/telegraf/telegraf.d/
       --config /dev/null
     volumes:
