@@ -28,7 +28,7 @@ services:
       - "traefik.http.routers.traefik-secure.entrypoints=https"
       - "traefik.http.routers.traefik-secure.rule=Host(`${TRAEFIK_DOMAIN:-traefik.owncloud.test}`)"
       - "traefik.http.middlewares.traefik-auth.basicauth.users=${TRAEFIK_BASIC_AUTH_USERS:-admin:$apr1$4vqie50r$YQAmQdtmz5n9rEALhxJ4l.}" # defaults to admin:admin
-      - "traefik.http.routers.traefik-secure.middlewares=traefik-auth"      
+      - "traefik.http.routers.traefik-secure.middlewares=traefik-auth"
       - "traefik.http.routers.traefik-secure.tls=true"
       - "traefik.http.routers.traefik-secure.tls.certresolver=http"
       - "traefik.http.routers.traefik-secure.service=api@internal"
@@ -94,13 +94,15 @@ services:
     ports:
       - "127.0.0.1:5601:5601"
     labels:
-      - "traefik.enable=false" # TODO: add basic auth when enabling
+      - "traefik.enable=${KIBANA_EXPOSED:-false}"
       - "traefik.http.routers.kibana.entrypoints=http"
       - "traefik.http.routers.kibana.rule=Host(`${KIBANA_DOMAIN:-kibana.owncloud.test}`)"
       - "traefik.http.middlewares.kibana-https-redirect.redirectscheme.scheme=https"
       - "traefik.http.routers.kibana.middlewares=kibana-https-redirect"
       - "traefik.http.routers.kibana-secure.entrypoints=https"
       - "traefik.http.routers.kibana-secure.rule=Host(`${KIBANA_DOMAIN:-kibana.owncloud.test}`)"
+      - "traefik.http.middlewares.kibana-auth.basicauth.users=${KIBANA_BASIC_AUTH_USERS:-admin:$apr1$4vqie50r$YQAmQdtmz5n9rEALhxJ4l.}" # defaults to admin:admin
+      - "traefik.http.routers.kibana-secure.middlewares=kibana-auth"
       - "traefik.http.routers.kibana-secure.tls=true"
       - "traefik.http.routers.kibana-secure.tls.certresolver=http"
       - "traefik.http.routers.kibana-secure.service=kibana"
@@ -185,7 +187,9 @@ services:
 
   telegraf:
     image: telegraf:latest
-    command: ["--config-directory","/etc/telegraf/telegraf.d/", "--config","/dev/null"]
+    command: | # only use config directory, but therefore we need to give a empty config file
+      --config-directory /etc/telegraf/telegraf.d/
+      --config /dev/null
     volumes:
       - ./config/telegraf:/etc/telegraf/telegraf.d:ro
       - /var/run/docker.sock:/var/run/docker.sock
