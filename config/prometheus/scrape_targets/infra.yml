@@ -1,4 +1,4 @@
 - labels:
     service: infra
   targets:
-    #- "telemetry.owncloud.works"
+    - "telemetry.k6.infra.owncloud.works"
