@@ -1,6 +1,7 @@
 - labels:
     service: oCIS
   targets:
+    - telemetry.team.owncloud.works
     - telemetry.ocis-traefik.latest.owncloud.works
     - telemetry.ocis-traefik.released.owncloud.works
     - telemetry.ocis-keycloak.latest.owncloud.works
