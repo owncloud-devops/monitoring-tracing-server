@@ -2,10 +2,17 @@
     service: oCIS
   targets:
     - telemetry.team.owncloud.works
+
+    - telemetry.ocis-web.latest.owncloud.works
+
     - telemetry.ocis-traefik.latest.owncloud.works
     - telemetry.ocis-traefik.released.owncloud.works
+
     - telemetry.ocis-keycloak.latest.owncloud.works
     - telemetry.ocis-keycloak.released.owncloud.works
+
     - telemetry.ocis-cs3-users.latest.owncloud.works
     - telemetry.ocis-cs3-users.released.owncloud.works
-    - telemetry.ocis-web.latest.owncloud.works
+
+    - telemetry.ocis-wopi.latest.owncloud.work
+    - telemetry.ocis-wopi.released.owncloud.work
