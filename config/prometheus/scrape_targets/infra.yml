@@ -1,4 +1,3 @@
 - labels:
     service: infra
   targets:
-    - telemetry.k6.infra.owncloud.works
