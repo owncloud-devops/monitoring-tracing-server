@@ -977,7 +977,7 @@
         "hide": 0,
         "includeAll": false,
         "label": "host",
-        "multi": true,
+        "multi": false,
         "name": "host",
         "options": [],
         "query": "label_values(system_uptime, host)",
