@@ -3,7 +3,7 @@ version: "3.7"
 
 services:
   traefik:
-    image: "traefik:v2.5"
+    image: "traefik:v2.5@sha256:7d0228d19042f1286765f0ef56ceba8e4e8a08ae9b45b854179cf09a9c3de633"
     command:
       - "--certificatesResolvers.http.acme.email=${TRAEFIK_ACME_MAIL:-'example@example.org'}"
       - "--certificatesResolvers.http.acme.storage=/certs/acme.json"
@@ -40,7 +40,7 @@ services:
     restart: always
 
   grafana:
-    image: grafana/grafana:8.2.5
+    image: grafana/grafana:8.2.5@sha256:00568d89c4f8a2cfa0d56f0fcd875b23ec8000b743a62f442e1ee91fce9a6e24
     volumes:
       - grafana:/var/lib/grafana
       - ./config/grafana/dashboards/:/etc/grafana/dashboards/
@@ -71,7 +71,7 @@ services:
     restart: always
 
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.15.2
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.15.2@sha256:a1dce08d504b22e87adc849c94dcae53f6a0bd12648a4d99d7f9fc07bb2e8a3e
     environment:
       - bootstrap.memory_lock=true
       - ES_JAVA_OPTS=-Xms2G -Xmx2G
@@ -88,7 +88,7 @@ services:
     restart: always
 
   kibana:
-    image: docker.elastic.co/kibana/kibana:7.15.2
+    image: docker.elastic.co/kibana/kibana:7.15.2@sha256:5b4c7c84cdf91dc154131c6d639d9c289a4bb03a2c701bfecea03edbf8e724be
     environment:
       ELASTICSEARCH_URL: http://elasticsearch:9200
     ports:
@@ -112,7 +112,7 @@ services:
     restart: always
 
   jaeger-collector:
-    image: jaegertracing/jaeger-collector:1.28.0
+    image: jaegertracing/jaeger-collector:1.28.0@sha256:bc92e4e2f8b27060ab72f9589de4c9548be80f59b605e681998c4334703f96e2
     command: |
       --span-storage.type=elasticsearch
       --es.server-urls=http://elasticsearch:9200
@@ -134,7 +134,7 @@ services:
     restart: always
 
   jaeger-query:
-    image: jaegertracing/jaeger-query:1.28.0
+    image: jaegertracing/jaeger-query:1.28.0@sha256:03fe08a41096521f0701bceb6b4e2bf56468b13276c5e509f08d4c7494134f77
     command: |
       --span-storage.type=elasticsearch
       --es.server-urls=http://elasticsearch:9200
@@ -158,7 +158,7 @@ services:
     restart: always
 
   prometheus:
-    image: prom/prometheus:v2.31.1
+    image: prom/prometheus:v2.31.1@sha256:a8779cfe553e0331e9046268e26c539fa39ecf90d59836d828163e65e8f4fa35
     command:
       - "--web.external-url=https://${PROMETHEUS_DOMAIN:-prometheus.owncloud.test}"
       - "--config.file=/etc/prometheus/prometheus.yml"
@@ -186,7 +186,7 @@ services:
     restart: always
 
   telegraf:
-    image: telegraf:latest
+    image: telegraf:latest@sha256:6a9dada7e7e9180724119a497a28e13910fcefd4473e9378aec96e91f1b37f23
     command: | # only use config directory, but therefore we need to give a empty config file
       --config-directory /etc/telegraf/telegraf.d/
       --config /dev/null
