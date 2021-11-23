@@ -1640,7 +1640,7 @@
         "hide": 0,
         "includeAll": true,
         "label": null,
-        "multi": true,
+        "multi": false,
         "name": "disk_device",
         "options": [],
         "query": "label_values(disk_used_percent{fstype!=\"rootfs\", host=\"$host\"}, device)",
