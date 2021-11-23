@@ -17,6 +17,8 @@
     - telemetry.ocis-wopi.latest.owncloud.works
     - telemetry.ocis-wopi.released.owncloud.works
 
+    - telemetry.oc10-ocis-parallel.latest.owncloud.works
+
     - telemetry.ocis-s3.latest.owncloud.works
 
     - telemetry.ocis-hello.latest.owncloud.works
