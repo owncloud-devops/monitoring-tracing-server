@@ -11,8 +11,8 @@
     - telemetry.ocis-keycloak.latest.owncloud.works
     - telemetry.ocis-keycloak.released.owncloud.works
 
-    - telemetry.ocis-cs3-users.latest.owncloud.works
-    - telemetry.ocis-cs3-users.released.owncloud.works
+    - telemetry.ocis-ldap.latest.owncloud.works
+    - telemetry.ocis-ldap.released.owncloud.works
 
     - telemetry.ocis-wopi.latest.owncloud.works
     - telemetry.ocis-wopi.released.owncloud.works
