@@ -118,7 +118,7 @@ services:
     restart: always
 
   jaeger-query:
-    image: jaegertracing/jaeger-query:1.31.0@sha256:b4006ba1db15e1a2d285268299e3b0eaf84825aa4a80c558fde717fbe922d49a
+    image: jaegertracing/jaeger-query:1.32.0@sha256:075e2e99c2bf1c868994be4973390bf29d0d81db0a8a2673e3de3fad3ff989e4
     command: |
       --span-storage.type=elasticsearch
       --es.server-urls=http://elasticsearch:9200
