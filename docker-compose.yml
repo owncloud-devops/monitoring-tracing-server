@@ -65,7 +65,7 @@ services:
     restart: always
 
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.3@sha256:8734ac48c10ff836a6d0c3d600297b453cb389e85fd26bb4ccb3d5a5bde7e554
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.4@sha256:b3fed35f7a43a3e16aa037bf9c8cb8139d1eec879ab5616f3c20746484de4010
     environment:
       - bootstrap.memory_lock=true
       - ES_JAVA_OPTS=-Xms2G -Xmx2G
