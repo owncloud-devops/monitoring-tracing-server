@@ -140,7 +140,7 @@ services:
     restart: always
 
   prometheus:
-    image: prom/prometheus:v2.40.5@sha256:2028b133eee0854854a6ddfff37a8a2e74e0520873164b602abbb04ad62ff572
+    image: prom/prometheus:v2.40.6@sha256:41c08335aa57102b162584301cefccb3759d97f5f8c2758a8619025a74d7c8a4
     command:
       - "--web.external-url=https://${PROMETHEUS_DOMAIN:-prometheus.owncloud.test}"
       - "--config.file=/etc/prometheus/prometheus.yml"
