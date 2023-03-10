@@ -120,12 +120,14 @@ services:
 
   jaeger-query:
     image: jaegertracing/jaeger-query:1.42.0@sha256:1c1901dca06a90beec516164523580c0ee34951c0ba88c9712600b107bf2ace4
+    environment:
+      SPAN_STORAGE_TYPE: elasticsearch
+      ES_SERVER_URLS: http://elasticsearch:9200
+      METRICS_STORAGE_TYPE: prometheus
+      PROMETHEUS_SERVER_URL: http://prometheus:9090
     command: |
-      --span-storage.type=elasticsearch
-      --es.server-urls=http://elasticsearch:9200
       --es.sniffer=false
-      --prometheus.server-url=http://prometheus:9090
-      --query.ui-config={"monitor": {"menuEnabled": true}}
+      --query.ui-config='{"monitor": {"menuEnabled": true}}'
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.jaeger-query.entrypoints=https"
