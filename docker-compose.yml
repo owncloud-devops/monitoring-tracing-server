@@ -127,7 +127,9 @@ services:
       PROMETHEUS_SERVER_URL: http://prometheus:9090
     command: |
       --es.sniffer=false
-      --query.ui-config='{"monitor": {"menuEnabled": true}}'
+      --query.ui-config=/ui-config.json
+    volumes:
+      - ./config/jaeger-query/ui-config.json:/ui-config.json:ro
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.jaeger-query.entrypoints=https"
