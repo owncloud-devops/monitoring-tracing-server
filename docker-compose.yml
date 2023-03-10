@@ -28,7 +28,7 @@ services:
       - "certs:/certs"
     labels:
       - "traefik.enable=${TRAEFIK_DASHBOARD:-false}"
-      - "traefik.http.middlewares.traefik-auth.basicauth.users=${TRAEFIK_BASIC_AUTH_USERS:-admin:$apr1$4vqie50r$YQAmQdtmz5n9rEALhxJ4l.}" # defaults to admin:admin
+      - "traefik.http.middlewares.traefik-auth.basicauth.users=${TRAEFIK_BASIC_AUTH_USERS:-admin:$$apr1$$4vqie50r$$YQAmQdtmz5n9rEALhxJ4l.}" # defaults to admin:admin
       - "traefik.http.routers.traefik.entrypoints=https"
       - "traefik.http.routers.traefik.rule=Host(`${TRAEFIK_DOMAIN:-traefik.owncloud.test}`)"
       - "traefik.http.routers.traefik.middlewares=traefik-auth"
@@ -94,7 +94,7 @@ services:
       - "traefik.http.routers.kibana.tls.certresolver=http"
       - "traefik.http.routers.kibana.service=kibana"
       - "traefik.http.services.kibana.loadbalancer.server.port=5601"
-      - "traefik.http.middlewares.kibana-auth.basicauth.users=${KIBANA_BASIC_AUTH_USERS:-admin:$apr1$4vqie50r$YQAmQdtmz5n9rEALhxJ4l.}" # defaults to admin:admin
+      - "traefik.http.middlewares.kibana-auth.basicauth.users=${KIBANA_BASIC_AUTH_USERS:-admin:$$apr1$$4vqie50r$$YQAmQdtmz5n9rEALhxJ4l.}" # defaults to admin:admin
       - "traefik.http.routers.kibana.middlewares=kibana-auth"
     logging:
       driver: "local"
@@ -124,8 +124,9 @@ services:
       --span-storage.type=elasticsearch
       --es.server-urls=http://elasticsearch:9200
       --es.sniffer=false
+      --prometheus.server-url=http://prometheus:9090
+      --query.ui-config={"monitor": {"menuEnabled": true}}
     labels:
-
       - "traefik.enable=true"
       - "traefik.http.routers.jaeger-query.entrypoints=https"
       - "traefik.http.routers.jaeger-query.rule=Host(`${JAEGER_QUERY_DOMAIN:-jaeger.owncloud.test}`)"
@@ -133,7 +134,7 @@ services:
       - "traefik.http.routers.jaeger-query.service=jaeger-query"
       - "traefik.http.services.jaeger-query.loadbalancer.server.port=16686"
       # you can protect your jaeger query instance with basic auth
-      #- "traefik.http.middlewares.jaeger-query-auth.basicauth.users=${JAEGER_QUERY_BASIC_AUTH_USERS:-admin:$apr1$4vqie50r$YQAmQdtmz5n9rEALhxJ4l.}" # defaults to admin:admin
+      #- "traefik.http.middlewares.jaeger-query-auth.basicauth.users=${JAEGER_QUERY_BASIC_AUTH_USERS:-admin:$$apr1$$4vqie50r$$YQAmQdtmz5n9rEALhxJ4l.}" # defaults to admin:admin
       #- "traefik.http.routers.jaeger-query.middlewares=jaeger-query-auth"
     logging:
       driver: "local"
@@ -158,7 +159,7 @@ services:
       - "traefik.http.routers.prometheus.service=prometheus"
       - "traefik.http.services.prometheus.loadbalancer.server.port=9090"
       # you can protect your prometheus instance with basic auth
-      #- "traefik.http.middlewares.prometheus-auth.basicauth.users=${PROMETHEUS_BASIC_AUTH_USERS:-admin:$apr1$4vqie50r$YQAmQdtmz5n9rEALhxJ4l.}" # defaults to admin:admin
+      #- "traefik.http.middlewares.prometheus-auth.basicauth.users=${PROMETHEUS_BASIC_AUTH_USERS:-admin:$$apr1$$4vqie50r$$YQAmQdtmz5n9rEALhxJ4l.}" # defaults to admin:admin
       #- "traefik.http.routers.prometheus.middlewares=prometheus-auth"
     logging:
       driver: "local"
