@@ -82,7 +82,7 @@ services:
     restart: always
 
   kibana:
-    image: docker.elastic.co/kibana/kibana:7.17.5@sha256:07038507d29f21e96f3af081e4ae059661c8e16a4307776ef00d75a692cf99c7
+    image: docker.elastic.co/kibana/kibana:7.17.18@sha256:92dd5b035465a032a80c83428f7d382fc65cb9dfb5e646e2599e2cb75b85e1a0
     environment:
       ELASTICSEARCH_URL: http://elasticsearch:9200
     ports:
