@@ -4,8 +4,6 @@ network :
 cluster.name: opentrace
 
 discovery.type: single-node
-discovery.zen.ping.unicast.hosts: ["0.0.0.0"]
-discovery.zen.minimum_master_nodes: 1
 
 indices.fielddata.cache.size: 40%
 
