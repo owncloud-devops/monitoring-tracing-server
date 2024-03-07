@@ -22,3 +22,4 @@
 
     - telemetry.ocis-s3.latest.owncloud.works
     - telemetry.pm.demo.owncloud.works
+    - telemetry.gpfs-demo.owncloud.works
