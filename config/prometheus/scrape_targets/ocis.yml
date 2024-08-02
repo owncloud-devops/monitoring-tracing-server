@@ -3,22 +3,16 @@
   targets:
     - telemetry.team.owncloud.works
 
-    - telemetry.ocis-web.latest.owncloud.works
-    - telemetry.ocis-web.daily.owncloud.works
+    - telemetry.ocis-web.master.owncloud.works
 
-    - telemetry.ocis-traefik.latest.owncloud.works
-    - telemetry.ocis-traefik.daily.owncloud.works
-    - telemetry.ocis-traefik.released.owncloud.works
+    - telemetry.ocis.master.owncloud.works
+    - telemetry.ocis.rolling.owncloud.works
+    - telemetry.ocis-onlyoffice.rolling.owncloud.works
+    - telemetry.ocis.production.owncloud.works
 
-    - telemetry.ocis-keycloak.latest.owncloud.works
-    - telemetry.ocis-keycloak.released.owncloud.works
-
-    - telemetry.ocis-ldap.latest.owncloud.works
-    - telemetry.ocis-ldap.released.owncloud.works
-
-    - telemetry.ocis-wopi.latest.owncloud.works
-    - telemetry.ocis-wopi.daily.owncloud.works
-    - telemetry.ocis-wopi.released.owncloud.works
+    - telemetry.ocis-keycloak.rolling.owncloud.works
+    - telemetry.ocis-s3.rolling.owncloud.works
+    - telemetry.ocis-ldap.rolling.owncloud.works
 
     - telemetry.ocis-s3.latest.owncloud.works
     - telemetry.pm.demo.owncloud.works
