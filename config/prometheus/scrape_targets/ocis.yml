@@ -14,6 +14,5 @@
     - telemetry.ocis-s3.rolling.owncloud.works
     - telemetry.ocis-ldap.rolling.owncloud.works
 
-    - telemetry.ocis-s3.latest.owncloud.works
     - telemetry.pm.demo.owncloud.works
     - telemetry.gpfs-demo.owncloud.works
