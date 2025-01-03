@@ -101,7 +101,7 @@ services:
     restart: always
 
   jaeger-collector:
-    image: jaegertracing/jaeger-collector:1.48.0@sha256:d82f050c06c4423cf6d4aeb6817b916de3757fd6960e00866b54006ca4462488
+    image: jaegertracing/jaeger-collector:1.64.0@sha256:2e174a49efafbec1477221081111570c5282b3fbe71e5b7738d23b10691d76e8
     command: |
       --es.server-urls=http://elasticsearch:9200
     environment:
