@@ -165,7 +165,7 @@ services:
     restart: always
 
   telegraf:
-    image: telegraf:1.33.2@sha256:5afb934bd448b8cd49d495fffac5fe8227267123a9af05f9f9ec6044a1799bd1
+    image: telegraf:1.33.2@sha256:369b690fabfe640e2ac4594dd77b3b701eeb342b56af7ec6d1cc7cf6e9a0cbcd
     user: telegraf:${HOST_DOCKER_GROUP_ID} # host docker group id, so that telegraf has access to the docker socket
     command: | # only use config directory, but therefore we need to give a empty config file
       --config-directory /etc/telegraf/telegraf.d/
